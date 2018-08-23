@@ -1,0 +1,26 @@
+x<-c(132,129,120,113.2,105,92,84,83.2,88.4,59,80,81.5,71,69.2)
+y<-c(46,48,51,52.1,54,52,59,58.7,61.6,64,61.4,54.6,58.8,58)
+DATOS<-data.frame(x,y)
+DATOS
+
+#EJERCICIO 1: Obtener gráfica de dispersión y describirla
+install.packages("ggplot2",dependencies=TRUE)
+library("ggplot2")
+ggplot(DATOS,aes(x,y))+geom_point()+ggtitle("Diagrama de disperción 1")+geom_smooth(method = lm)
+#Relación negativa y fuerza media
+
+
+#EJERCICIO 2: Calcular las estimaciones puntuales (B0,B1)
+MEDx=mean(x)
+MEDy=mean(y)
+NUMERADOR<-c(sum((x-mean(x))*(y-mean(y))))
+DENOMINADOR<-c(sum((x-mean(x))*(x-mean(x))))
+B1=NUMERADOR/DENOMINADOR
+B1
+B0=MEDy-(B1*MEDx)
+B0
+
+
+#EJERCICIO 3: Gráficar la recta con la gráfica de dispersión
+y1=B0+(B1*x)
+ggplot(DATOS, aes(x,y))+geom_point()+ggtitle("DIAGRAMA DE DISPERSIÓN 2")+geom_line(aes(x,y1))
