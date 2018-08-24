@@ -1,0 +1,85 @@
+# 1 Generar los vectores siguientes: 
+  # a)	(1, 2, 3, …,15)
+x<-c(1:15); x
+  # b)	(15, …, 3, 2, 1)
+y<-c(15:1); y
+  # c)	(1, 2, 3, …, 15, 15, 14, …, 3, 2, 1)
+z<-c(x,y); z
+  # d)	(2,7,8) asígnale el nombre tiempo
+Tiempo<-c(2,7,8);Tiempo
+  # e)	(1, 7, 9, 1, 7, 9, …, 1, 7, 9) se necesita que en este vector se repita 7 veces el valor 9 .  
+    #Tip: Usar la función rep donde hay 10 ocurrencias de 4.
+    # 1)	Se repite 7 veces el valor 9
+rep(c(1,7,9),c(0,0,7))
+    # 2)	10 ocurrencias de 4
+rep(c(1,7,9),each=4,times=10)
+  # f)	(2, 3, 9, 2, 3, 9, …, 9, 2,3,9) se repita 15 veces el dato 3 y 9 veces el dato 2. 
+    #Tip: Usar la función rep.
+    # 1)	
+V1<-c(2,3,9);V1
+rep(V1,c(9,15,0))
+    # 2)	
+rep(c(2,3,9),c(9,15,0))
+  # g)	(7,7,….,7, 0, 0, . . . , 0, 5, 5, . . . , 5) repita 12 veces el 7,  25 veces el 0 y 35 veces el 5.
+rep(c(7,0,5),c(12,25,35))
+
+# 2.	Con base en los siguientes vectores
+        # (1)	   set.seed(50)
+        # (2)	   vector1 <- sample(0:999, 250, replace=T)
+        # (3)	   vector2 <- sample(0:999, 250, replace=T)
+  #a)	Describe las 4 líneas anteriores
+      # Tomando en cuenta que la semilla (seed) es un número, la función set.seed permite establecer una semilla generadora de números aleatorios, es útil para crear simulaciones u objetos aleatorios que pueden reproducirse. 
+      # El punto principal de usar la semilla es poder reproducir una secuencia particular de números aleatorios, es decir, dada la misma semilla, podemos obtener la misma secuencia. La semilla es una manera de decirle al generador de números aleatorios 'por dónde empezar'. Usar el mismo número, como set.seed (123) asegura que puedes reproducir los resultados.
+      # Al vincularlo con la función sample, permite tomar una muestra del tamaño especificado, con o sin reemplazo según se indique true (T) o falso (F).
+      # Así, en (2) y (3) lo que se genera son dos vectores de 250 elementos cada uno, los cuales tiene valores aleatorios con reemplazo, entre 0 y 999. En este caso, la función set.seed asegura que los elementos de los vectores 1 y 2 sean los mismos siempre que los vectores sean llamados.
+
+
+#                      ***MATRICES***
+
+# 1.	Si tenemos la siguiente matriz
+M1<-matrix(c(1,5,-2,1,2,-1,3,6,3),nrow=3,ncol=3);M1
+  # a)	Remplaza la primera columna y agrega los datos de la suma del segundo  y tercera columna. 
+MT1<-matrix(colSums(M1),1,3,byrow=T);MT1
+MT2<-matrix(M[1,2:3],1,2,byrow=T);MT2
+MT3<-cbind(MT2,0);MT3
+MT4<-matrix(MT3,3,1,byrow=T);MT4
+MT<-cbind(MT4,M1[1:3,2:3]);MT
+
+# 2.	Genera una matriz de  8 × 9 de valores aleatorios enteros y con un rango entre 0 y 9.
+set.seed(5)
+V1<-sample(0:9,72,replace=T); V1
+M1<- matrix(V1,nrow = 8,ncol = 9,byrow=TRUE); M1
+  # a)	Encuentra los valores que tengan el número 1 y extráigalos.
+M2<-M1[M1==1]; M2
+  # b)	Extraiga el valor que está en el renglón 1 columna 3.
+M1[1,3]
+  # c)	Genera una matriz donde uses el argumento byrow=, nrow=…. 
+    #Con 5 renglones.
+M<-matrix(1:25,nrow = 5,ncol = 5,byrow = TRUE); M
+  # d)	De la matriz de 8x9 extra, la columna 7 declárala como un nuevo vector.
+V2<-M1[,7]; V2
+  # e)	Suma cada una de las columnas y los renglones de la matriz de 8x9 y genera dos vectores nuevos que contengan todo la columna y renglón seleccionado.
+SumaC<-colSums(M1);SumaC
+VC1<-SumaC;VC1
+SumaR<-rowSums(M1);SumaR
+VC2<-SumaR;VC2
+  # f)	Genera una matriz de 4 renglones y 5 columnas  que se llame S y calcula lo siguiente:
+set.seed(9)
+V<-sample(0:99,20,replace=F); V
+S<-matrix(V,nrow=4,ncol=5,byrow=TRUE); S
+        # La media de la columna 5
+Med<-mean(S[,5]); Med
+        # La varianza del renglón 2
+Var<-var(S[2,]); Var
+        # Investiga la función rowMeans() y colMeans() y menciona que columna y renglón tienen la media más alta.
+# La Media más grande es la de la Columna 5
+CM<-colMeans(S); CM
+#	La Media más grande es la de la Fila 4
+RM<-rowMeans(S); RM
+  # g)	De la matriz de 8x9, agrégale una columna solo con valores de 1.
+C10<-c(rep(1,8)); C10
+M2<-cbind(M1,C10); M2
+C10
+  # h)	De la matriz de 4 renglones y 5 columnas, agrégale un renglón  solo con valores de 0.
+R5<-c(rep(0,5)); R5
+S2<-rbind(S,R5); S2
