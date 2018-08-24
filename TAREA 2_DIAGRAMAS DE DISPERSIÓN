@@ -1,0 +1,35 @@
+#Instalar paquetería
+install.packages("ggplot2",dependencies = TRUE)
+library("ggplot2")
+
+#Creación de variables
+X<-c(0.4,0.42,0.48,0.51,0.57,0.60,0.70,0.75,0.75,0.78,0.84,0.95,0.99,1.03,1.12,1.5,1.20,1.25,1.25,1.28,1.30,1.34,1.37,1.40,1.43,1.46,1.49,1.55,1.58,1.60)
+Y<-c(1.02,1.21,0.88,0.98,1.52,1.83,1.50,1.80,1.74,1.63,2.00,2.80,2.48,2.47,3.05,3.18,3.76,3.68,3.82,3.21,4.27,3.12,3.99,3.75,4.10,4.18,3.77,4.34,4.21,4.92)
+DATOS<-data.frame(X,Y); DATOS
+
+pdf("GRÁFICA1.pdf")
+ggplot(DATOS,aes(x=X,y=Y))+geom_point()+ggtitle("GRÁFICA DE DISPERSIÓN")+xlab("VARIABLE INDEPENDIENTE X")+ylab("VARIABLE DEPENDIENTE Y")+geom_smooth(method = lm)
+dev.off()
+
+#1
+# A) Tipo de relación: Positiva
+# B) Identificar "outliers"
+pdf("GRÁFICA2.pdf")
+num.outliers
+
+#Ordenamos los datos de mayor a menor distancia según la métrica de Mahalanobis
+mah.ordenacion <- order(mahalanobis(DATOS,colMeans(DATOS),cov(DATOS)), decreasing=TRUE)
+outlier2<-rep(FALSE,nrow(DATOS))
+
+#Generamos un vector boleano de los dos valores más alejados según la distancia de Mahalanobis
+outlier2[mah.ordenacion[1:num.outliers]]<-TRUE
+colorear.outlier<-outlier2*16
+plot(DATOS,pch=0,main="Outliders Identificados")+points(DATOS,pch=colorear.outlier)
+dev.off()
+
+# C) Fuerza de la Relación: Alta
+# D) Eliminar "outliers" identificados
+pdf("GRÁFICA3.pdf")
+GRÁFICA_SIN_OUTLIDERS<-DATOS[-c(22,21),]
+ggplot(GRÁFICA_SIN_OUTLIDERS, aes(x=X,y=Y))+geom_point()+ggtitle("GRÁFICA DE DISPERSIÓN SIN OUTLIDERS")+xlab("VARIABLE INDEPENDIENTE X")+ylab("VARIABLE DEPENDIENTE Y")+geom_smooth(method = lm)
+dev.off()
