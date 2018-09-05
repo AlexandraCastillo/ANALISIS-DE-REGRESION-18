@@ -1,0 +1,135 @@
+                                 # CAPÍTULO 2
+
+install.packages("ggplot2")
+require ("ggplot2")
+set.seed (1410) 
+dsmall <- diamonds [sample (nrow (diamonds), 100), ]
+
+####2.3 basic use
+x11()
+qplot(carat,price,data=diamonds)
+x11()
+qplot(log(carat),log(price), data=diamonds)
+
+x11()
+qplot(carat,x*y*z,data=diamonds)
+
+####2.4 colour,size,shape and other aesthetic attributes
+x11()
+qplot(carat,price,data=dsmall,colour=color)
+
+x11()
+qplot(carat,price,data=diamonds,shape=cut)
+
+x11()
+qplot(carat,price,data=diamonds, alpha=I(1/10))
+x11()
+qplot(carat,price,data=diamonds, alpha=I(1/100))
+x11()
+qplot(carat,price,data=diamonds,alpha=I(1/200))
+
+
+######### 2.5 plot geoms
+######2.5.1 adding a smoother to a plot
+x11()
+qplot(carat,price,data=dsmall,geom = c("point","smooth"))
+
+x11()
+qplot(carat,price,data=diamonds,geom = c("point","smooth"))
+
+x11()
+qplot(carat,price,data=dsmall, geom=c("point","smooth"),span=0.2)
+
+x11()
+qplot(carat,price,data=dsmall, geom=c("point","smooth"),span=1)
+
+library(mgcv)
+x11()
+qplot(carat,price,data=dsmall, geom=c("point","smooth"),  
+      method = "gam", formula=y~s(x))
+x11()
+qplot(carat, price, data = dsmall, geom = c("point", "smooth"),
+      method = "gam", formula = y ~ s(x, bs = "cs"))
+
+library(splines)
+x11()
+qplot(carat, price, data = dsmall, geom = c("point", "smooth"),
+      method = "lm")
+x11()
+qplot(carat, price, data = dsmall, geom = c("point", "smooth"),
+      method = "lm", formula = y ~ ns(x,5))
+####2.5.2 boxplot and jittered points
+x11()
+qplot(color, price / carat, data = diamonds, geom = "jitter",
+      alpha = I(1 / 5))
+x11()
+qplot(color, price / carat, data = diamonds, geom = "jitter",
+      alpha = I(1 / 50))
+x11()
+qplot(color, price / carat, data = diamonds, geom = "jitter",
+      alpha = I(1 / 200))
+
+###########2.5.3 histogram and density pots
+x11()
+qplot(carat, data = diamonds, geom = "histogram")
+x11()
+qplot(carat, data = diamonds, geom = "density")
+
+x11()
+qplot(carat, data = diamonds, geom = "histogram", binwidth = 1,
+      xlim = c(0,3))
+
+x11()      
+qplot(carat, data = diamonds, geom = "histogram", binwidth = 0.1,
+      xlim = c(0,3))
+x11()      
+qplot(carat, data = diamonds, geom = "histogram", binwidth = 0.01,
+      xlim = c(0,3))
+x11()
+qplot(carat, data = diamonds, geom = "density", colour = color)
+x11()
+qplot(carat, data = diamonds, geom = "histogram", fill = color)
+
+#######2.5.4 Bar charts 
+x11()
+qplot(color, data = diamonds, geom = "bar")
+x11()
+qplot(color, data = diamonds, geom = "bar", weight = carat) + 
+  scale_y_continuous("carat")
+
+########2.5.5 time series with line and path plots
+x11()
+qplot(date, unemploy / pop, data = economics, geom = "line")
+x11()
+qplot(date, uempmed, data = economics, geom = "line")
+
+
+year <- function(x) as.POSIXlt(x)$year + 1900
+x11()
+qplot(unemploy / pop, uempmed, data = economics,   
+      geom = c("point", "path"))
+
+x11()
+qplot(unemploy / pop, uempmed, data = economics,  
+      geom = "path", colour = year(date)) + scale_area()
+
+#########2.6 faceting
+x11()     
+qplot(carat, data = diamonds, facets = color ~ .,
+      geom = "histogram", binwidth = 0.1, xlim = c(0, 3))
+x11()
+qplot(carat, ..density.., data = diamonds, facets = color ~ .,
+      geom = "histogram", binwidth = 0.1, xlim = c(0, 3))
+
+##########2.7 other options
+qplot(
+  + carat, price, data = dsmall,
+  + xlab = "Price ($)", ylab = "Weight (carats)",
+  + main = "Price-weight relationship")
+qplot(
+  + carat, price/carat, data = dsmall,
+  + ylab = expression(frac(price,carat)),
+  + xlab = "Weight (carats)",
+  + main="Small diamonds",
+  + xlim = c(.2,1))
+qplot(carat, price, data = dsmall, log = "xy")
